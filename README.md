@@ -1,5 +1,5 @@
 #Identity Provider - Frontend
 ---
-This repo contains the code for the identity provider website's frontend.
+This repo contains frontend code for identity provider website
 
 © Copyright 2024
