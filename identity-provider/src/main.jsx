@@ -7,10 +7,18 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './main.css'
 
-import LandingPage from './pages/LandingPage.jsx'
+// import LandingPage from './pages/LandingPage.jsx'
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <React.StrictMode>
+//     <LandingPage />
+//   </React.StrictMode>,
+// )
+
+import ProfilePage from './pages/ProfilePage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <LandingPage />
+    <ProfilePage/>
   </React.StrictMode>,
 )
