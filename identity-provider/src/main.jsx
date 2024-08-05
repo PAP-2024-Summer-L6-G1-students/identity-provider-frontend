@@ -8,9 +8,10 @@ import '@fontsource/roboto/700.css';
 import './main.css'
 
 import LandingPage from './pages/LandingPage.jsx'
-
+import CreateAccount from './pages/CreateAccount.jsx';
+import Login from './pages/Login.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <LandingPage />
+    <CreateAccount />
   </React.StrictMode>,
 )
