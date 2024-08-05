@@ -50,7 +50,7 @@ export default function CreateAccount() {
     }
   
     return (
-      <div className="signup-container">
+      <div id="signup-container">
         <h1>Create an account</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
