@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SignUp.css';
+import './CreateAccount.css';
 
 
 export default function CreateAccount() {
