@@ -8,9 +8,11 @@ import '@fontsource/roboto/700.css';
 import './main.css'
 
 import LandingPage from './pages/LandingPage.jsx'
+import Layout from './Layouts/Layout.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <LandingPage />
+    <Layout/>
   </React.StrictMode>,
 )
