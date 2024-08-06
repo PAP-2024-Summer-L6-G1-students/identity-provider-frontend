@@ -1,0 +1,88 @@
+#landing-page {    
+  height: 932px;
+  width: 430px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+#landing-page-header {
+  height: 260px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid transparent;
+  font-size: 18px;
+}
+
+#lp-header-text {
+  margin-top: 70px;
+  margin-left: 32px;
+  color: rgb(154,148,148);
+  font-size: 18px;
+  font-weight: 400;
+}
+#hero-text-div {
+  display: flex;
+  align-items: flex-start;
+  height: 60px;
+  width: 100%;
+}
+#hero-text {
+  margin: 0;
+  margin-top: 0px;
+  margin-left: 32px;
+  color: black;
+  font-size: 32px;
+  font-weight: 600;
+  padding: 0px;
+  line-height: 40px;
+  
+}
+#hero-subtext {
+  margin-left: 32px;
+  margin-top: 4px;
+  color: rgb(154,148,148);
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 300;
+}
+
+#image-div {
+  display: flex;
+  justify-content: center;
+  height: 400px;
+  width: 100%;
+}
+
+#landing-image {
+  height: 100%;
+  width: 90%;
+}
+
+#create-account-div {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+}
+
+#create-account-button {
+   width: 75%;
+   height: 100%;
+   background-color: rgba(144, 66, 223, 1)
+}
+#create-account-subtext-div {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+}
+#create-account-subtext {
+  color: black;
+}
+#log-in-text {
+  margin-left: 4px;
+  color: rgba(144, 66, 223, 1);
+  font-weight: 550;
+}
