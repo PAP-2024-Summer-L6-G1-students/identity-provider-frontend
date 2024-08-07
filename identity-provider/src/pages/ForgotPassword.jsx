@@ -1,5 +1,4 @@
 import './ForgotPassword.css'
-import arrow from '/arrow.png'
 import forgotPasswordImage from '/forgot-password-image.png'
 import ValidationTextFields from '../components/ValidationTextFields'
 
