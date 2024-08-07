@@ -55,7 +55,7 @@
   }
   
   #landing-image {
-    height: 100%;
+    height: 80%;
     width: 90%;
   }
   
@@ -73,6 +73,12 @@
      height: 100%;
      background-color: rgba(144, 66, 223, 1)
   }
+  #create-account-button:hover {
+    transition: 0.2s ease-in;
+    background-color: rgb(154, 91, 216);
+  }
+
+
   #create-account-subtext-div {
     display: flex;
     justify-content: center;
