@@ -6,16 +6,19 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './main.css';
-import LandingPage from './pages/LandingPage.jsx';
+import Landing from './pages/Landing.jsx';
 import CreateAccount from './pages/CreateAccount.jsx';
 import Login from './pages/Login.jsx';
+import ChangePassword from './pages/ChangePassword.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+      <Route path="/" element={<Landing />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/ChangePassword" element={<ChangePassword />} />
       </Routes>
     </Router>
   </React.StrictMode>,
