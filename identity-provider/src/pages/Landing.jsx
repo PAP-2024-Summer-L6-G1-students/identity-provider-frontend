@@ -1,13 +1,16 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'; 
 import './Landing.css'
 import landingImage from '/landing-image.png'
 
 
 export default function Landing() {
     const [count, setCount] = useState(0)
+    const navigate = useNavigate()
 
     const createAccount = () => {
         console.log("You're being directed to create your account")
+        navigate('/create-account');
     }
 
     return (
