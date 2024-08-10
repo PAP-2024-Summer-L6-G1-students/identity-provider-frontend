@@ -9,13 +9,14 @@ import './main.css';
 import LandingPage from './pages/LandingPage.jsx';
 import CreateAccount from './pages/CreateAccount.jsx';
 import Login from './pages/Login.jsx';
-
+import SSOPage from "./pages/SSO.jsx";
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/SSO" element={<SSOPage />} />
       </Routes>
     </Router>
   </React.StrictMode>,
