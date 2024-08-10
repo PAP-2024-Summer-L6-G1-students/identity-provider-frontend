@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/sso" element={<SSOPage />} />
       </Routes>
     </Router>
   </React.StrictMode>,
