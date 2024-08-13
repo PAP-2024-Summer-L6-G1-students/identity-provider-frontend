@@ -9,6 +9,8 @@ import './main.css';
 import LandingPage from './pages/LandingPage.jsx';
 import CreateAccount from './pages/CreateAccount.jsx';
 import Login from './pages/Login.jsx';
+import EnterCodeFromEmail from './pages/EnterCodeFromEmail.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -16,6 +18,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/entercodefromemail" element={<EnterCodeFromEmail/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+
+
       </Routes>
     </Router>
   </React.StrictMode>,
