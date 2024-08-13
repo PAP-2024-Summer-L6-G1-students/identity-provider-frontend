@@ -8,6 +8,7 @@ export default function ValidationTextFields() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
+    console.log(event.target.value)
   }
 
   const validateEmail = () => {

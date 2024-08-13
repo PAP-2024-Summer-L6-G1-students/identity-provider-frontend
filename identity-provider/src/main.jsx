@@ -10,6 +10,9 @@ import LandingPage from './pages/Landing.jsx';
 import ForgotPassword from './pages/ForgotPassword.jsx'
 import CreateAccount from './pages/CreateAccount.jsx';
 import Login from './pages/Login.jsx';
+import EnterEmail from './pages/EnterCodeFromEmail.jsx';
+import ResetPassword from './pages/ResetPassword.jsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -20,6 +23,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/enter-code" element={<EnterEmail />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   </React.StrictMode>,
