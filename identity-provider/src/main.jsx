@@ -11,12 +11,13 @@ import ForgotPassword from './pages/ForgotPassword.jsx'
 import CreateAccount from './pages/CreateAccount.jsx';
 import Login from './pages/Login.jsx';
 import ChangePassword from './pages/ChangePassword.jsx';
-
+import ShareInfo from './pages/ShareInfo.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/sso/permissions" element={<ShareInfo/>} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
