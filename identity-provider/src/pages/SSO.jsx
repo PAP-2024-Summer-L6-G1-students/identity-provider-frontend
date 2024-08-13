@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // Importing uuid
 import './SSOPage.css';
 
@@ -8,6 +8,98 @@ function SSOPage() {
     signUpRedirect: '',
     signInRedirect: ''
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Abdiwahid testing if backend and front end is still connecting and working
+        const response = await fetch('http://localhost:3002/NO');
+       const result = await response.json();
+        console.log(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData()
+
+    return () => {
+      console.log('Component will unmount');
+    };
+  }, []); 
+
+  async function fetchJSON(route, options) {
+    let response;
+    try {
+        response = await fetch(route, {
+            method: options && options.method ? options.method : "GET",
+            body: options && options.body ? JSON.stringify(options.body) : undefined,
+            headers:
+                options && options.body
+                    ? { "Content-Type": "application/json" }
+                    : undefined,
+        });
+    } catch (error) {
+        throw new Error(
+            `Error fetching ${route} with options: ${
+                options ? JSON.stringify(options) : options
+            }. No response from server (failed to fetch). Error: ${error.message}`
+        );
+    }
+
+    let responseJson;
+    try {
+        responseJson = await response.json();
+    } catch (error) {
+        throw new Error(
+            `Error fetching ${route} with options: ${
+                options ? JSON.stringify(options) : options
+            }. Status: ${response.status}. Couldn't parse response as JSON. Error: ${error.message}`
+        );
+    }
+
+    if (response.status < 200 || response.status >= 300 || responseJson.status === "error") {
+        throw new Error(
+            `Error fetching ${route} with options: ${
+                options ? JSON.stringify(options) : options
+            }. Status: ${response.status}. Response: ${
+                responseJson ? JSON.stringify(responseJson) : responseJson
+            }`
+        );
+    }
+
+    return responseJson;
+}
+
+
+
+  async function updateUserData() {
+    const route = 'http://localhost:3002/SSO/update?email=help@gmail.com'; // ?userName=username 
+    const options = {
+        method: 'PATCH',
+        body: {
+            UUID: 'your-uuid-here', 
+            firstName: 'John', 
+            lastName: 'Doe',
+            address: '123 Main St',
+            phone: 1234567890,
+            interests: ['coding', 'music'],
+            birthday: '1990-01-01',
+            avaliability: ['Monday', 'Wednesday'],
+        }
+    };
+
+    try {
+        const response = await fetchJSON(route, options);
+        console.log('User updated or created successfully:', response);
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
+}
+
+updateUserData();
+
+
+
 
   const [accessPermissions, setAccessPermissions] = useState({
     username: false,
