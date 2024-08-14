@@ -1,0 +1,27 @@
+#Shareinfo {
+    #text {
+        color: black;
+        text-align: center;
+    }
+
+    ul {
+        color: black;
+        margin-top: 30px;
+    }
+
+    li {
+        margin-left: 30%;
+        margin-top: 10px;
+        font-size: larger;
+    }
+
+    #confirm {
+        padding: 12px;
+        margin-top: 20px;
+        width: 30%;
+        align-items: center;
+        border-radius: 30px;
+        margin-left: 30%;
+    }
+
+}
