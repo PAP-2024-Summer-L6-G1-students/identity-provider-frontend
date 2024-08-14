@@ -14,7 +14,7 @@ export default function Footer() {
 
     return (
         <footer id='page-footer'>
-            <Paper sx={{ display: 'flex', justifyContent: 'center', position: 'fixed', bottom: 0, left: 0, right: 0, backgroundColor: "rgba(144, 66, 223, 1)", borderBottomRightRadius: "120px", borderBottomLeftRadius: "120px" }}>
+            <Paper sx = {{borderBottompRightRadius: '120px' ,borderBottomLeftRadius: '120px'}}>
                 <Box sx={{ width: 500, backgroundColor: "rgba(144, 66, 223, 1)" }}>
                     <BottomNavigation
                         style={{ backgroundColor: 'rgba(144, 66, 223, 1)' }}
@@ -29,7 +29,7 @@ export default function Footer() {
                         <BottomNavigationAction component={Link} to='/connect' label="Connect" icon={<EditCalendarIcon />} />
                     </BottomNavigation>
                 </Box>
-            </Paper>
+                </Paper>
         </footer>
     );
 

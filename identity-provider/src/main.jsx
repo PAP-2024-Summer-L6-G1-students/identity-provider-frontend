@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Router>
       <Routes>
         <Route path="/entercodefromemail" element={<EnterCodeFromEmail/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/dashboard" element={<Layout><Dashboard/></Layout>} />
         <Route path="/" element={<Landing />} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
         <Route path="/create-account" element={<CreateAccount />} />
