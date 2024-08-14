@@ -32,11 +32,10 @@ function SSOPage() {
     try {
         response = await fetch(route, {
             method: options && options.method ? options.method : "GET",
-            body: options && options.body ? JSON.stringify(options.body) : undefined,
-            headers:
-                options && options.body
-                    ? { "Content-Type": "application/json" }
-                    : undefined,
+            body: options && options.method !== 'GET' ? JSON.stringify(options.body) : undefined,
+            headers: options && options.method !== 'GET'
+                ? { "Content-Type": "application/json" }
+                : undefined,
         });
     } catch (error) {
         throw new Error(
@@ -70,6 +69,23 @@ function SSOPage() {
     return responseJson;
 }
 
+async function findUser(uuid) {
+  const route = `http://localhost:3002/SSO/user?UUID=${uuid}`; 
+
+  try {
+      const response = await fetchJSON(route, {
+          method: 'GET',
+      });
+
+      console.log('User retrieved successfully:', response);
+      return response;
+  } catch (error) {
+      console.error('An error occurred:', error.message);
+  }
+}
+
+
+findUser('your-uuid-here');
 
 
   async function updateUserData() {
@@ -121,6 +137,11 @@ updateUserData();
     setAccessPermissions(prev => ({ ...prev, [name]: checked }));
   }
 
+  // Create a new scheme
+  // Info form field info
+
+  // Another text field backend relying party backedn
+
   function generateApiKey() {
     const key = uuidv4(); 
     setApiKey(key);
@@ -128,12 +149,13 @@ updateUserData();
   }
 
   return (
-    <div className="container">
+    <div id="sso-page">
       <form className="form">
         <h1 className="title">Create an SSO button for your website</h1>
         <input className="input" placeholder="Website Domain" name="websiteDomain" value={formData.websiteDomain} onChange={handleInputChange} />
         <input className="input" placeholder="After Sign-Up Redirect Page" name="signUpRedirect" value={formData.signUpRedirect} onChange={handleInputChange} />
         <input className="input" placeholder="After Sign-In Redirect Page" name="signInRedirect" value={formData.signInRedirect} onChange={handleInputChange} />
+        <input className="input" placeholder="Relying Part Page" name="signUpRedirect" value={formData.signUpRedirect} onChange={handleInputChange} />
 
         <input type="checkbox" className="checkbox" id="username" name="username" checked={accessPermissions.username} onChange={handleCheckboxChange} />
         <label htmlFor="username" className="label">Username</label>
@@ -149,9 +171,7 @@ updateUserData();
         
         <input type="checkbox" className="checkbox" id="streetAddress" name="streetAddress" checked={accessPermissions.streetAddress} onChange={handleCheckboxChange} />
         <label htmlFor="streetAddress" className="label">Street Address</label>
-        
-        <button type="button" className="button" onClick={generateApiKey}>Generate API Key</button>
-        <button type="button" className="button">Generate SSO Button</button>
+        <button type="button" className="button">Save Information</button>
       </form>
     </div>
   );
