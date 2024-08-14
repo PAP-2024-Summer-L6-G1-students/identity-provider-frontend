@@ -15,6 +15,8 @@ import Dashboard from './pages/Dashboard.jsx';
 import ChangePassword from './pages/ChangePassword.jsx';
 import CreateProfilePage from './pages/CreateProfilePage.jsx'
 
+import ShareInfo from './pages/ShareInfo.jsx';
+import SSOPage from './pages/SSO.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
@@ -22,11 +24,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/entercodefromemail" element={<EnterCodeFromEmail/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/" element={<Landing />} />
+        <Route path="/sso/permissions" element={<ShareInfo/>} />
         <Route path="/ChangePassword" element={<ChangePassword />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
-       <Route path = "/createprofile" element={<CreateProfilePage />} /> 
+        <Route path="/createprofile" element={<CreateProfilePage />} /> 
+        <Route path="/sso" element={<SSOPage />} />
       </Routes>
     </Router>
   </React.StrictMode>,
