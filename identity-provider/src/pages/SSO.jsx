@@ -28,6 +28,7 @@ function SSOPage() {
     let response;
     try {
       response = await fetch(route, {
+        credentials: 'include',
         method: options && options.method ? options.method : 'GET',
         body: options && options.method !== 'GET' ? JSON.stringify(options.body) : undefined,
         headers: options && options.method !== 'GET'
@@ -61,7 +62,7 @@ function SSOPage() {
   useEffect(() => {
     const fetchApiInfo = async () => {
       try {
-        const data = await fetchJSON(`http://localhost:3002/sso/get-api-info/${userUUID}`);
+        const data = await fetchJSON(`https://localhost:3002/sso/get-api-info/${userUUID}`);
         setApiInfo(data);
         setLoading(false);
       } catch (error) {
@@ -101,6 +102,7 @@ function SSOPage() {
     };
   
     const options = {
+      credentials: 'include',
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
