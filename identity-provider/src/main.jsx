@@ -15,7 +15,8 @@ import Dashboard from './pages/Dashboard.jsx';
 import ChangePassword from './pages/ChangePassword.jsx';
 import SSOLogin from './pages/SSOLogin.tsx';
 import Layout from './Layouts/Layout.jsx';
-import CreateProfilePage from './pages/CreateProfilePage.jsx'
+import CreateProfilePage from './pages/CreateProfilePage.jsx';
+import AccountContext from './contexts/AccountContext.js';
 
 import ShareInfo from './pages/ShareInfo.jsx';
 import SSOPage from './pages/SSO.jsx'
