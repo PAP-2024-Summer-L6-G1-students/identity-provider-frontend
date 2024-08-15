@@ -172,7 +172,7 @@ function SSOPage() {
               checked={apiInfo.requiresEmail}
               onChange={handleCheckboxChange}
             />
-            Requires Email
+            Email
           </label>
           <label className="grid-item">
             <input
@@ -183,7 +183,7 @@ function SSOPage() {
               checked={apiInfo.requiresFirstName}
               onChange={handleCheckboxChange}
             />
-            Requires First Name
+            First Name
           </label>
           <label className="grid-item">
             <input
@@ -194,7 +194,7 @@ function SSOPage() {
               checked={apiInfo.requiresLastName}
               onChange={handleCheckboxChange}
             />
-            Requires Last Name
+            Last Name
           </label>
           <label className="grid-item">
             <input
@@ -205,7 +205,7 @@ function SSOPage() {
               checked={apiInfo.requiresAddress}
               onChange={handleCheckboxChange}
             />
-            Requires Address
+            Address
           </label>
           <label className="grid-item">
             <input
@@ -216,7 +216,7 @@ function SSOPage() {
               checked={apiInfo.requiresPhoneNumber}
               onChange={handleCheckboxChange}
             />
-            Requires Phone Number
+            Phone Number
           </label>
           <label className="grid-item">
             <input
@@ -227,7 +227,7 @@ function SSOPage() {
               checked={apiInfo.requiresInterests}
               onChange={handleCheckboxChange}
             />
-            Requires Interests
+            Interests
           </label>
           <label className="grid-item">
             <input
@@ -238,7 +238,7 @@ function SSOPage() {
               checked={apiInfo.requiresBirthdate}
               onChange={handleCheckboxChange}
             />
-            Requires Birthdate
+            Birthdate
           </label>
           <label className="grid-item">
             <input
@@ -249,7 +249,7 @@ function SSOPage() {
               checked={apiInfo.requiresAvailability}
               onChange={handleCheckboxChange}
             />
-            Requires Availability
+            Availability
           </label>
           <label className="grid-item">
             <input
@@ -260,7 +260,7 @@ function SSOPage() {
               checked={apiInfo.requiresBio}
               onChange={handleCheckboxChange}
             />
-            Requires Bio
+            Bio
           </label>
         </div>
         <button type="button" className="button" onClick={saveInformation}>
