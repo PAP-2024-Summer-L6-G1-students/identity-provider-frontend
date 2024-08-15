@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './Login.css';
 
 function SSOLogin() {
@@ -116,7 +116,7 @@ function SSOLogin() {
         </button>
       </form>
       <p className="signup-link">
-        Don’t have an account yet? <a href="/signup">Sign up</a>
+        Don’t have an account yet? <Link to="/create-account">Sign up</Link>
       </p>
     </div>
   );
