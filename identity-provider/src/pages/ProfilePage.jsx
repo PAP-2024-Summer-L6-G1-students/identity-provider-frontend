@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useContext} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,14 +9,24 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import './ProfilePage.css'
 
+import AccountContext from '../contexts/AccountContext';
 
 import { useNavigate } from 'react-router-dom'; 
 
+
+// When we click the submit button, we want an onlcick event listener to display the users information within the divs 
+// Submit Button
+// onCLick event listener (which event listener?)
+// .addEventListener("click", displayDate);
+
+// call the div tags id= 'profile-info'
 
 export default function ProfilePage() {
 
 // const [count, setCount] = useState(0)
 const navigate = useNavigate()
+
+const accountContext = useContext(AccountContext);
     
         
 const UpdateProfile = () => {
@@ -34,6 +44,11 @@ const UseAuthApp = () => {
 }
 
 const [open, setOpen] = React.useState(false);
+const [fullName, setfullName] = React.useState('');
+const [address, setAddress] = React.useState('');
+const [phoneNumber, setphoneNumber] = React.useState('');
+const [email, setEmail] = React.useState('');
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,6 +58,18 @@ const [open, setOpen] = React.useState(false);
     setOpen(false);
   };
 
+  useEffect(()=>{
+    async function getUserInfo() {
+      const results = await fetch('https://localhost:3002/' + accountContext.loggedInUser(), {credentials: 'include'});
+      const resultData = await results.json();
+      setfullName(resultData.firstName + ' ' + resultData.lastName);
+      setAddress(resultData.address);
+      setphoneNumber(resultData.phone);
+      setEmail(resultData.email);
+    }
+    getUserInfo();
+  }, []);
+
     return (
         <>
         <h2>Settings</h2>
@@ -50,8 +77,8 @@ const [open, setOpen] = React.useState(false);
         {/* Placeholder image? */}
 
         {/* Users Name and Email */}
-        <h1>User's name will display here depending on the name data that is stored after pressing 'update profile' button</h1>
-        <p>User's email will display here depending on the email data that is stored after pressing 'update profile' button </p>
+        {/* <h1>User's name will display here depending on the name data that is stored after pressing 'update profile' button</h1>
+        <p>User's email will display here depending on the email data that is stored after pressing 'update profile' button </p> */}
         {/* Email will need to be updated depending on the email data that is stored */}
 
         <h1>Basic Profile Information</h1>
@@ -86,6 +113,8 @@ const [open, setOpen] = React.useState(false);
 
 <div id = 'profile-info'>
     <div>Full Name </div>
+    <br>
+    </br>
     <div>Email</div>
     <div>Phone Number</div>
     <div>Address</div>
@@ -98,7 +127,7 @@ const [open, setOpen] = React.useState(false);
 {/* Update Profile Button */}
 
 <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" id = 'update-profile' onClick={handleClickOpen}>
         Update Profile
       </Button>
       <Dialog
@@ -181,8 +210,8 @@ const [open, setOpen] = React.useState(false);
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" onClick = {UpdateProfile}>Submit</Button>
+          <Button id = 'update-profile' onClick={handleClose}>Cancel</Button>
+          <Button type="submit" id = 'update-profile' onClick = {UpdateProfile}>Submit</Button>
           {/* When this submit button is clicked on (with an onclick, event listener it will display the user info on the page) */}
         </DialogActions>
       </Dialog>
@@ -191,14 +220,14 @@ const [open, setOpen] = React.useState(false);
 
         <h1>Passwords and Security</h1>
 
-        <button type = "submit" onClick = {ChangePassword}>Change Password</button>
+        <button type = "submit" id = 'update-profile' onClick = {ChangePassword}>Change Password</button>
 
 
         <br/>
 
         <h1>Multi-factor Authentication</h1>
-        <button type = "submit" onClick = {UseAuthApp}>Use an Authentication App</button>
-        <script src="ProfilePageJS.js"></script>
+        <button type = "submit" id = 'update-profile' onClick = {UseAuthApp}>Use an Authentication App</button>
+        {/* <script src="ProfilePageJS.js"></script> */}
         </>
         
 )}
