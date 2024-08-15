@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './Login.css';
 import AccountContext from '../contexts/AccountContext';
+import {Link} from 'react-router-dom';
 
 const hostURL = "https://volunteer-identity-provider.onrender.com/";
 // const hostURL = "https://localhost:3002";
@@ -144,16 +145,16 @@ function Login() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <a href="/forgot-password" className="forgot-password">
+          <Link to="/forgot-password">
             Forgot Password?
-          </a>
+          </Link>
         </div>
         <button type="submit" className="login-button">
           Log in
         </button>
       </form>
       <p className="signup-link">
-        Don’t have an account yet? <a href="/signup">Sign up</a>
+        Don’t have an account yet? <Link to="/signup">Sign up</Link>
       </p>
     </div>
   );
