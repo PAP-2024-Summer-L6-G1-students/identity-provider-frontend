@@ -1,0 +1,10 @@
+#page-footer {
+    position: fixed;
+    bottom: -1px;
+
+    .MuiBottomNavigationAction-root.Mui-selected {
+        color: white;
+        background-color: rgba(144, 66, 223, 1);
+    }
+
+}
