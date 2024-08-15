@@ -1,13 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Login.css';
+import AccountContext from '../contexts/AccountContext';
+
+const hostURL = "https://volunteer-identity-provider.onrender.com/";
+// const hostURL = "https://localhost:3002";
+
+const apiSignup = hostURL+ "/signup";
+const apiLogin = hostURL+ "/login";
+const apiLogout = hostURL+ "/logout";
+
+const postSignupParams = {
+  headers: { 'Content-Type': 'application/json' },
+  method: 'POST',
+  credentials: 'include'
+};
+const postLoginParams = {
+  headers: { 'Content-Type': 'application/json' },
+  method: 'POST',
+  credentials: 'include'
+};
+const postLogoutParams = {
+  headers: { 'Content-Type': 'application/json' },
+  method: 'POST',
+  credentials: 'include'
+};
+
 
 function Login() {
+  const accountContext = useContext(AccountContext);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  // FUNCTION
   function handleLogin(e) {
     e.preventDefault();
     if (!username) {
@@ -21,6 +49,63 @@ function Login() {
     } else {
       setPasswordError('');
     }
+  }
+
+  // FUNCTION
+  async function signupUser(user) {
+    try {
+      const postSignupParamsWithBody = {
+        ...postSignupParams,
+        body: JSON.stringify(user)
+      };
+
+      const response = await fetch(apiSignup, postSignupParamsWithBody);
+      if (response.status === 201) {
+        setLoggedInUser(user.username);
+        saveLocalAccountData(user.username);
+
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    return false;
+  }
+
+  // FUNCTION
+  async function loginUser(user) {
+    try {
+      const postLoginParamsWithBody = {
+        ...postLoginParams,
+        body: JSON.stringify(user)
+      };
+
+      const response = await fetch(apiLogin, postLoginParamsWithBody);
+      if (response.status === 200) {
+        accountContext.loginUser(user.userName);
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    return false;
+  }
+
+  // FUNCTION
+  async function logoutUser() {
+    try {
+      const response = await fetch(apiLogout, postLogoutParams);
+      if (response.status === 200) {
+        accountContext.logoutUser();
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    return false;
   }
 
   return (
