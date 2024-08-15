@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreateAccount.css';
+import {Link} from 'react-router-dom';
 
 
 export default function CreateAccount() {
@@ -102,7 +103,7 @@ export default function CreateAccount() {
           </button>
         </form>
         <p>
-          Already have an account? <a href="/login">Log In</a>
+          Already have an account? <Link to="/login">Log In</Link>
         </p>
       </div>
     );
