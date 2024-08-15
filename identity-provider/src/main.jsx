@@ -20,6 +20,7 @@ import AccountContext from './contexts/AccountContext.js';
 
 import ShareInfo from './pages/ShareInfo.jsx';
 import SSOPage from './pages/SSO.jsx'
+import ProfilePage from './pages/ProfilePage.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -51,6 +52,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           
           <Route path="/createprofile" element={<CreateProfilePage />} /> 
           <Route path="/sso" element={<SSOPage />} />
+          <Route path = '/profile' element = {<ProfilePage/>} />
         </Routes>
       </Router>
     </AccountContext.Provider>

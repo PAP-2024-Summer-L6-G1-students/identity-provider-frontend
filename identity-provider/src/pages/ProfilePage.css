@@ -1,0 +1,13 @@
+#profile-info {
+    display:flex
+}
+
+#update-profile {
+    margin-right: 36px;
+    width: 150px;
+    border-radius:  15px;
+    background-color: rgba(144, 66, 223, 1);
+    font-weight: 600;
+    color: white;
+    outline: none;
+}
