@@ -1,8 +1,12 @@
 import './ResetPassword.css'
 import ValidationTextFields from '../components/ResetPasswordTextFields'
 import ResetPasswordTextFields from '../components/ResetPasswordTextFields'
+import { useParams } from 'react-router-dom'
+
 
 export default function resetPassword() {
+    const params = useParams()
+    const urlUUID = params.uuid
     return(
         <div id="reset-password-page">
             <div id="title-div">
@@ -13,8 +17,7 @@ export default function resetPassword() {
                 <p id="new-password">New Password</p>
                 <ResetPasswordTextFields/>
             </div>
-            <button id="reset-button">Reset Password</button>
-
         </div>
     )
 }
+

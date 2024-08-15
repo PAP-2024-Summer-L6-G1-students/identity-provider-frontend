@@ -1,8 +1,29 @@
+import { useState } from 'react';
 import './ForgotPassword.css'
 import forgotPasswordImage from '/forgot-password-image.png'
 import ValidationTextFields from '../components/ValidationTextFields'
 
 export default function forgotPassword() {
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('')
+
+    async function logInput(input) {
+        try {
+          const response = await fetch('http://localhost:3002/forgot-password', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }), 
+          });
+      
+          const result = await response.text();
+          console.log(result); 
+        } catch (error) {
+          console.error('Error logging input:', error);
+        }
+    }
+
 
     return (
         <div id="forgot-password-page">
@@ -16,12 +37,13 @@ export default function forgotPassword() {
 
             <h2 id="email-title">Enter your email address</h2>
             <div id="email-div">
-                <ValidationTextFields/>
+                <ValidationTextFields value={email} onChange={e => setEmail(e.target.value)}/>
             </div>
             <div id="redirect-button-divs">
-                <button id="confirm-button">Send Email</button>
-            </div>
+            <button onClick={() => logInput()} id="confirm-button">Send Email</button>
             
+            </div>
+            <p>Email sent successfully</p>
         </div>
     )
 }

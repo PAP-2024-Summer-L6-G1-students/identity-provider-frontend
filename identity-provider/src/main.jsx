@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/enter-code" element={<EnterEmail />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password/:uuid" element={<ResetPassword />} />
       </Routes>
     </Router>
   </React.StrictMode>,

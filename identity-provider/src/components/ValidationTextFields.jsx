@@ -1,23 +1,26 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-
-export default function ValidationTextFields() {
+export default function ValidationTextFields(props) {
   const [email, setEmail] = React.useState('');
   const [error, setError] = React.useState(false);
 
+  
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
-    console.log(event.target.value)
   }
 
   const validateEmail = () => {
-    if (email !== "valid@example.com") { // Implement valid email logic here
+    if (props.value !== "valid@example.com") { // Implement valid email logic here
       setError(true)
     } else {
       setError(false)
     }
   }
+  
+
+
 
   return (
     <Box
@@ -33,20 +36,19 @@ export default function ValidationTextFields() {
           id="outlined-basic"
           label="Email"
           variant="outlined"
-          value={email}
-          onChange={handleEmailChange}
-          onBlur={validateEmail} // Validate email on blur
+          value={props.value}
+          onChange={props.onChange}
+          onBlur={() => validateEmail(props.value)}
         />
       ) : (
         <TextField
-          error
-          id="outlined-error-helper-text"
-          label="Error"
-          defaultValue={email}
-          helperText="Email is not associated with this account"
+          id="outlined-basic"
+          value={props.value}
+          variant="outlined"
           onChange={handleEmailChange}
-          onBlur={validateEmail} // Validate email on blur
+          onBlur={() => validateEmail(props.value)} 
         />
+        
       )}
     </Box>
   );
