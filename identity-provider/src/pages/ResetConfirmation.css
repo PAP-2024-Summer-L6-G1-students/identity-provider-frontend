@@ -1,0 +1,33 @@
+#reset-confirmation-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 932px;
+    width: 430px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+#check-img {
+    margin-top: 175px;
+    width: 50%;
+    height: 200px;
+}
+
+#success-text {
+    margin: 10px;
+    color: black;
+    font-size: 26px;
+}
+#success-subtext {
+    margin: 0;
+    color: black;
+    font-size: 16px;
+}
+
+#login-redirect-button {
+    margin-top: 60px;
+    width: 75%;
+     height: 60px;
+     background-color: rgba(144, 66, 223, 1)
+}
