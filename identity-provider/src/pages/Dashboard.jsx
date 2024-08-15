@@ -36,136 +36,167 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// ******************************************************
+import { renderMatches } from 'react-router-dom';
+
+
+function VolunteerOrg(props) {
+  return (
+    <div className="volunteer-org">
+      <p>Organization Name: {props.companyName}</p>
+      <button type="button" onClick={() => props.onEditInfo(props.companyName)}>View Info</button>
+      <button type="button" className="unlink" onClick={() => props.onUnlink(props.companyName)}>Unlink</button>
+    </div>
+  );
+}
 
 function DashboardNoOrganizations() {
-
     const voulenteerButton = () => {
-        console.log('This button will link to our relying parties website')
-    }
+        console.log('This button will link to our relying parties website');
+    };
+
     return (
         <>
-        <h1>You're not currently connected to any organizations.</h1>
-        <p>Search for voulenteer oppertunities <button type = "submit" onClick = {voulenteerButton}> Here</button></p>
-        
+            <h1>You're not currently connected to any organizations.</h1>
+            <p>
+                Search for volunteer opportunities{' '}
+                <button type="submit" onClick={voulenteerButton}>
+                    Here
+                </button>
+            </p>
         </>
-    )
+    );
 }
 
 function DashboardOrganizations() {
+    const [openViewInfo, setOpenViewInfo] = React.useState(false);
+    const [openUnlinkConfirm, setOpenUnlinkConfirm] = React.useState(false);
+    const [currentOrganization, setCurrentOrganization] = React.useState(null);
+    const [linkedOrganzations, setLinkedOrganzations] = React.useState([
+      
+      
+      {"company-name": "Red Cross"}, 
+      {"company-name": "Red Cross2"},
+      {"company-name": "Red Cross3"}, 
+      {"company-name": "Red Cross4"}, 
+      {"company-name": "Red Cross5"}
+      
+    
+    ]);
+    const editInfoButton = (organization) => {
+        setCurrentOrganization(organization);
+        setOpenViewInfo(true);
+    };
 
-   // code copied from material ui: Will show the dialog component on the website
-  //  Will need a seperate one for each dialog's title and description
-  //  Will need another open, setOpen for the other dialog
+    const unlinkButton = (organization) => {
+        setCurrentOrganization(organization);
+        setOpenUnlinkConfirm(true);
+    };
 
+    const handleCloseViewInfo = () => {
+        setOpenViewInfo(false);
+        //setCurrentOrganization(null);
+    };
 
-   const [open, setOpen] = React.useState(false);
-   const [dialogTitle] = React.useState('Hello World');
-    //  open is the current state value( in dialog, open = {open}), setOpen is the function that updates the state and we are setting it to true 
-  //  useState returns an array
- 
-  // open is set to false. What does false do though? Maybe we can change the true and false statements to something else?
-  // if you were to call setOpen(true), it will change the value of open to true
-  // so how does this carry over to what we have going on so far?
+    const handleCloseUnlinkCancel = () => {
+      setOpenUnlinkConfirm(false);
+      //setCurrentOrganization(null);
+  };
 
+    const handleCloseUnlinkConfirm = () => {
+        setOpenUnlinkConfirm(false);
+        setCurrentOrganization(null);
+    };
 
-   const handleClickOpen = () => {
-     setOpen(true);
-   };
- 
-   const handleClose = () => {
-     setOpen(false);
-   };
- // *********************************************
-
-//  We want dialog to show up for each button, so do we need to put the return inside the buttons or keep it in the function?
-    const editInfoButton = () => {
-        console.log('This button will bring up a typed out alert which shows your information and contains x butttons to delete info with a cancel and save button.')
-    }
-
-    const unlinkButton = () => {
-        console.log('This button will bring up a typed alert which will ask you if you want to unlink from the organization the user pressed, with a cancel and confirm button.')
-    }
     return (
         <>
-        <h1>Your Volunteer Organizations</h1>
-        <h2>Select an account to sign in </h2>
-        <a href = 'https://www.redcross.org/'></a>
-        <button type = 'submit' onClick = {editInfoButton}> View Info</button>
-        {/* We need a patch request for the unlink button to update the list of organizations once the user presses 'confirm' */}
-        <button type = 'submit' onClick = {unlinkButton}>Unlink</button>
+            <h1>Your Volunteer Organizations</h1>
+            <h2>Select an account to sign in</h2>
+            {linkedOrganzations.map(element => {
+             return(<VolunteerOrg
+  
+             companyName={element['company-name']}
+             onEditInfo={editInfoButton}
+             onUnlink={unlinkButton}
+           />)
+            })}
 
-        {/* This Dialog will come up after you click the "Edit Info" button. */}
+            {/* <VolunteerOrg
+  
+        companyName="Red Cross"
+        onEditInfo={editInfoButton}
+        onUnlink={unlinkButton}
+      />
 
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby={dialogTitle}
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Your Information"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {/* Placeholder unordered list for the list of organizations: Will want to show what user's information is linked to those organizations*/}
-            <p> You are currently sharing this information with ______</p>
-          <ul>
-             <li>Username</li>
-             <li>Name</li>
-             <li>Address</li>
-             </ul>
-             {/* ******************************************* */}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <VolunteerOrg
+        companyName="St. Vincent de Paul"
+        onEditInfo={editInfoButton}
+        onUnlink={unlinkButton}
+      /> */}
 
-      {/* This Dialog will come up after you click the "Unlink" button. */}
+            <Dialog
+                open={openViewInfo}
+                onClose={handleCloseViewInfo}
+                aria-labelledby="view-info-title"
+                aria-describedby="view-info-description"
+            >
+                <DialogTitle id="view-info-title">
+                    {"Your Information for " + currentOrganization}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="view-info-description">
+                        <p>You are currently sharing this information with {currentOrganization}:</p>
+                        <ul>
+                            <li>Username: johndoe@gmail.com</li>
+                            <li>Name: John Doe</li>
+                            <li>Address: 123 Main St</li>
+                        </ul>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseViewInfo}>Ok</Button>
+                </DialogActions>
+            </Dialog>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Are you sure you would like to unlink your account from ______?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
+            <Dialog
+                open={openUnlinkConfirm}
+                onClose={handleCloseUnlinkConfirm}
+                aria-labelledby="unlink-confirm-title"
+                aria-describedby="unlink-confirm-description"
+            >
+                <DialogTitle id="unlink-confirm-title">
+                    {"Are you sure you would like to unlink from " + currentOrganization + "?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="unlink-confirm-description">
+                        This action cannot be undone.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+          <Button onClick={handleCloseUnlinkCancel}>Cancel</Button>
+          <Button onClick={handleCloseUnlinkConfirm} autoFocus>
             Confirm
           </Button>
         </DialogActions>
-      </Dialog>
+            </Dialog>
         </>
-
-    )
+    );
 }
 
 export default function Dashboard() {
-
     const hasOrganizations = true;
 
-    let renderedComponent = <></>;
-
-    if (hasOrganizations) {
-        renderedComponent = <DashboardOrganizations/>;
-    } else {
-        renderedComponent = <DashboardNoOrganizations/>;
-    }
-
-    return renderedComponent;
-
+    return (
+        <>
+            <header className="header">
+                <h1>Welcome, John Doe</h1>
+                <h2>Dashboard</h2>
+            </header>
+            {hasOrganizations ? <DashboardOrganizations /> : <DashboardNoOrganizations />}
+            <footer>
+                <div>Dashboard</div>
+                <div>Settings</div>
+                <div>Connect</div>
+            </footer>
+        </>
+    );
 }
-
