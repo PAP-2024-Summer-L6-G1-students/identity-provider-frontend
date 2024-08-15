@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'; 
 import './Landing.css'
 import landingImage from '/landing-image.png'
+import {Link} from 'react-router-dom';
 
 
 export default function Landing() {
@@ -29,7 +30,7 @@ export default function Landing() {
             <div id="create-account-subtext-div">
                 <p id="create-account-subtext">Already have an account?</p>
                 
-                <p><a href="test.html"id="log-in-text" >Log In</a></p>
+                <p><Link to="test.html" id="log-in-text">Log In</Link></p>
             </div>
         </div>
         
