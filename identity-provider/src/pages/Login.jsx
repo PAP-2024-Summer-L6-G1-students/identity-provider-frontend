@@ -50,6 +50,7 @@ function Login() {
     } else {
       setPasswordError('');
     }
+    loginUser({userName: username, password: password});
   }
 
   // FUNCTION
