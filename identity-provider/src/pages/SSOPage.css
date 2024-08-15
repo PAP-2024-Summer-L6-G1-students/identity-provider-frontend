@@ -7,6 +7,29 @@
     background-color: #f4f4f4;
     font-family: 'Arial', sans-serif;
 }
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Fixed column width */
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .grid-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox {
+    margin-right: 10px;
+  }
+  
+  label {
+    font-size: 16px;
+    color: #333;
+    white-space: nowrap; /* Prevent text wrapping within labels */
+  }
+  
+  
 
 .form {
     padding: 20px;
@@ -29,7 +52,8 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #fafafa;
+    background-color: white;
+    color: #4CAF50;
 }
 
 .button {

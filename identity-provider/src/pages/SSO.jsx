@@ -1,178 +1,283 @@
-import React, { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // Importing uuid
-import './SSOPage.css';
-
+import React, { useState, useEffect } from 'react';
+import "./SSOPage.css"
 function SSOPage() {
-  const [formData, setFormData] = useState({
+  const [apiInfo, setApiInfo] = useState({
+    afterLoginRedirectRoute: '',
+    afterSignupRedirectRoute: '',
+    apiKey: '',
+    requiresAddress: false,
+    requiresAvailability: false,
+    requiresBio: false,
+    requiresBirthdate: false,
+    requiresEmail: false,
+    requiresFirstName: false,
+    requiresInterests: false,
+    requiresLastName: false,
+    requiresPhoneNumber: false,
+    userUUID: '',
     websiteDomain: '',
-    signUpRedirect: '',
-    signInRedirect: ''
+    websiteServerDomain: '',
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Abdiwahid testing if backend and front end is still connecting and working
-        const response = await fetch('http://localhost:3002/NO');
-       const result = await response.json();
-        console.log(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData()
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    return () => {
-      console.log('Component will unmount');
-    };
-  }, []); 
+  const userUUID = 'testUUID'; 
 
   async function fetchJSON(route, options) {
     let response;
     try {
-        response = await fetch(route, {
-            method: options && options.method ? options.method : "GET",
-            body: options && options.method !== 'GET' ? JSON.stringify(options.body) : undefined,
-            headers: options && options.method !== 'GET'
-                ? { "Content-Type": "application/json" }
-                : undefined,
-        });
+      response = await fetch(route, {
+        method: options && options.method ? options.method : 'GET',
+        body: options && options.method !== 'GET' ? JSON.stringify(options.body) : undefined,
+        headers: options && options.method !== 'GET'
+          ? { 'Content-Type': 'application/json' }
+          : undefined,
+      });
     } catch (error) {
-        throw new Error(
-            `Error fetching ${route} with options: ${
-                options ? JSON.stringify(options) : options
-            }. No response from server (failed to fetch). Error: ${error.message}`
-        );
+      throw new Error(
+        `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}. No response from server (failed to fetch). Error: ${error.message}`
+      );
     }
 
     let responseJson;
     try {
-        responseJson = await response.json();
+      responseJson = await response.json();
     } catch (error) {
-        throw new Error(
-            `Error fetching ${route} with options: ${
-                options ? JSON.stringify(options) : options
-            }. Status: ${response.status}. Couldn't parse response as JSON. Error: ${error.message}`
-        );
+      throw new Error(
+        `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}. Status: ${response.status}. Couldn't parse response as JSON. Error: ${error.message}`
+      );
     }
 
-    if (response.status < 200 || response.status >= 300 || responseJson.status === "error") {
-        throw new Error(
-            `Error fetching ${route} with options: ${
-                options ? JSON.stringify(options) : options
-            }. Status: ${response.status}. Response: ${
-                responseJson ? JSON.stringify(responseJson) : responseJson
-            }`
-        );
+    if (response.status < 200 || response.status >= 300 || responseJson.status === 'error') {
+      throw new Error(
+        `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}. Status: ${response.status}. Response: ${responseJson ? JSON.stringify(responseJson) : responseJson}`
+      );
     }
 
     return responseJson;
-}
-
-async function findUser(uuid) {
-  const route = `http://localhost:3002/SSO/user?UUID=${uuid}`; 
-
-  try {
-      const response = await fetchJSON(route, {
-          method: 'GET',
-      });
-
-      console.log('User retrieved successfully:', response);
-      return response;
-  } catch (error) {
-      console.error('An error occurred:', error.message);
   }
-}
 
-
-findUser('your-uuid-here');
-
-
-  async function updateUserData() {
-    const route = 'http://localhost:3002/SSO/update?email=help@gmail.com'; // ?userName=username 
-    const options = {
-        method: 'PATCH',
-        body: {
-            UUID: 'your-uuid-here', 
-            firstName: 'John', 
-            lastName: 'Doe',
-            address: '123 Main St',
-            phone: 1234567890,
-            interests: ['coding', 'music'],
-            birthday: '1990-01-01',
-            avaliability: ['Monday', 'Wednesday'],
-        }
+  useEffect(() => {
+    const fetchApiInfo = async () => {
+      try {
+        const data = await fetchJSON(`http://localhost:3002/sso/get-api-info/${userUUID}`);
+        setApiInfo(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
     };
 
-    try {
-        const response = await fetchJSON(route, options);
-        console.log('User updated or created successfully:', response);
-    } catch (error) {
-        console.error('An error occurred:', error.message);
-    }
-}
+    fetchApiInfo();
+  }, [userUUID]);
 
-updateUserData();
-
-
-
-
-  const [accessPermissions, setAccessPermissions] = useState({
-    username: false,
-    name: false,
-    email: false,
-    phone: false,
-    streetAddress: false
-  });
-
-  const [apiKey, setApiKey] = useState('');
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setApiInfo(prev => ({ ...prev, [name]: value }));
   }
+
+  async function saveInformation() {
+    const route = `http://localhost:3002/sso/save-api-info/${apiInfo.userUUID}`;
+  
+    const body = {
+      websiteDomain: apiInfo.websiteDomain,
+      afterSignupRedirectRoute: apiInfo.afterSignupRedirectRoute,
+      afterLoginRedirectRoute: apiInfo.afterLoginRedirectRoute,
+      websiteServerDomain: apiInfo.websiteServerDomain,
+      requiresEmail: apiInfo.requiresEmail,
+      requiresFirstName: apiInfo.requiresFirstName,
+      requiresLastName: apiInfo.requiresLastName,
+      requiresAddress: apiInfo.requiresAddress,
+      requiresPhoneNumber: apiInfo.requiresPhoneNumber,
+      requiresInterests: apiInfo.requiresInterests,
+      requiresBirthdate: apiInfo.requiresBirthdate,
+      requiresAvailability: apiInfo.requiresAvailability,
+      requiresBio: apiInfo.requiresBio
+    };
+  
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body), 
+    };
+  
+    try {
+      const response = await fetch(route, options);
+      if (!response.ok) {
+        throw new Error(`Failed to save information: ${response.statusText}`);
+      }
+      const responseData = await response.json();
+      console.log('Information saved successfully:', responseData);
+    } catch (error) {
+      console.error('Failed to save information:', error);
+    }
+  }
+  
 
   function handleCheckboxChange(event) {
     const { name, checked } = event.target;
-    setAccessPermissions(prev => ({ ...prev, [name]: checked }));
-  }
-
-  // Create a new scheme
-  // Info form field info
-
-  // Another text field backend relying party backedn
-
-  function generateApiKey() {
-    const key = uuidv4(); 
-    setApiKey(key);
-    alert(`Your new API key is: ${key}`);
+    setApiInfo(prev => ({ ...prev, [name]: checked }));
   }
 
   return (
     <div id="sso-page">
-      <form className="form">
-        <h1 className="title">Create an SSO button for your website</h1>
-        <input className="input" placeholder="Website Domain" name="websiteDomain" value={formData.websiteDomain} onChange={handleInputChange} />
-        <input className="input" placeholder="After Sign-Up Redirect Page" name="signUpRedirect" value={formData.signUpRedirect} onChange={handleInputChange} />
-        <input className="input" placeholder="After Sign-In Redirect Page" name="signInRedirect" value={formData.signInRedirect} onChange={handleInputChange} />
-        <input className="input" placeholder="Relying Part Page" name="signUpRedirect" value={formData.signUpRedirect} onChange={handleInputChange} />
+      <form className="form" onSubmit={(e) => e.preventDefault()}>
+        <h1 className="title">SSO API Information</h1>
+        <input
+          className="input"
+          placeholder="Website Domain"
+          name="websiteDomain"
+          value={apiInfo.websiteDomain}
+          onChange={handleInputChange}
+        />
 
-        <input type="checkbox" className="checkbox" id="username" name="username" checked={accessPermissions.username} onChange={handleCheckboxChange} />
-        <label htmlFor="username" className="label">Username</label>
+        <input
+          className="input"
+          placeholder="Website Server Domain"
+          name="websiteServerDomain"
+          value={apiInfo.websiteServerDomain}
+          onChange={handleInputChange}
+        />
+
+        <input
+          className="input"
+          placeholder="After Sign-Up Redirect Route"
+          name="afterSignupRedirectRoute"
+          value={apiInfo.afterSignupRedirectRoute}
+          onChange={handleInputChange}
+        />
+
+        <input
+          className="input"
+          placeholder="After Login Redirect Route"
+          name="afterLoginRedirectRoute"
+          value={apiInfo.afterLoginRedirectRoute}
+          onChange={handleInputChange}
+        />
+
+        <div className="grid-container">
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresEmail"
+              name="requiresEmail"
+              checked={apiInfo.requiresEmail}
+              onChange={handleCheckboxChange}
+            />
+            Requires Email
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresFirstName"
+              name="requiresFirstName"
+              checked={apiInfo.requiresFirstName}
+              onChange={handleCheckboxChange}
+            />
+            Requires First Name
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresLastName"
+              name="requiresLastName"
+              checked={apiInfo.requiresLastName}
+              onChange={handleCheckboxChange}
+            />
+            Requires Last Name
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresAddress"
+              name="requiresAddress"
+              checked={apiInfo.requiresAddress}
+              onChange={handleCheckboxChange}
+            />
+            Requires Address
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresPhoneNumber"
+              name="requiresPhoneNumber"
+              checked={apiInfo.requiresPhoneNumber}
+              onChange={handleCheckboxChange}
+            />
+            Requires Phone Number
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresInterests"
+              name="requiresInterests"
+              checked={apiInfo.requiresInterests}
+              onChange={handleCheckboxChange}
+            />
+            Requires Interests
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresBirthdate"
+              name="requiresBirthdate"
+              checked={apiInfo.requiresBirthdate}
+              onChange={handleCheckboxChange}
+            />
+            Requires Birthdate
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresAvailability"
+              name="requiresAvailability"
+              checked={apiInfo.requiresAvailability}
+              onChange={handleCheckboxChange}
+            />
+            Requires Availability
+          </label>
+          <label className="grid-item">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="requiresBio"
+              name="requiresBio"
+              checked={apiInfo.requiresBio}
+              onChange={handleCheckboxChange}
+            />
+            Requires Bio
+          </label>
+        </div>
+        <button type="button" className="button" onClick={saveInformation}>
+          Save Information
+        </button>
+
+        <button type="button" className="button">
+        Your Api Key: {apiInfo.apiKey}
+        </button>
         
-        <input type="checkbox" className="checkbox" id="name" name="name" checked={accessPermissions.name} onChange={handleCheckboxChange} />
-        <label htmlFor="name" className="label">Name</label>
+
+       <textarea>{`<a href="http://localhost:5173/sso/login/${apiInfo.websiteDomain}">Login with SSO</a>`}</textarea>
         
-        <input type="checkbox" className="checkbox" id="email" name="email" checked={accessPermissions.email} onChange={handleCheckboxChange} />
-        <label htmlFor="email" className="label">Email Address</label>
-        
-        <input type="checkbox" className="checkbox" id="phone" name="phone" checked={accessPermissions.phone} onChange={handleCheckboxChange} />
-        <label htmlFor="phone" className="label">Phone Number</label>
-        
-        <input type="checkbox" className="checkbox" id="streetAddress" name="streetAddress" checked={accessPermissions.streetAddress} onChange={handleCheckboxChange} />
-        <label htmlFor="streetAddress" className="label">Street Address</label>
-        <button type="button" className="button">Save Information</button>
       </form>
+
+     
+      
     </div>
   );
 }
