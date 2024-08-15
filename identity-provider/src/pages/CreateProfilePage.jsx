@@ -67,7 +67,9 @@ export default function ProfilePage() {
         <TextField id="outlined-basic" label="Address" variant="outlined" />
         </Box>
         
-        <button type = "submit" onClick = {CreateProfile}>Create Your Profile</button>
+        {/* <div id="redirect-button-divs"> */}
+        <button type = "submit" id = "confirm-button" onClick = {CreateProfile}>Create Your Profile</button>
+        {/* </div> */}
        
        
         </>

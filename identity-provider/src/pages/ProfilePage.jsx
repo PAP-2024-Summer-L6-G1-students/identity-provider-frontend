@@ -1,26 +1,66 @@
-// 
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import './ProfilePage.css'
+
+
+import { useNavigate } from 'react-router-dom'; 
+
+
 export default function ProfilePage() {
 
-        const UpdateProfile = () => {
-                console.log("The inputs should stay on the page and text boxes should go away")
-        }
+// const [count, setCount] = useState(0)
+const navigate = useNavigate()
+    
+        
+const UpdateProfile = () => {
+        console.log("This button will store the users data and display on the profile information");
+}
+
+const ChangePassword = () => {
+        console.log("This button will redirect to the Change Your Password page")
+        navigate('/ChangePassword')
+}
+
+const UseAuthApp = () => {
+        console.log("This button will redirect to the Use an Authentication App page")
+        navigate('')
+}
+
+const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
     return (
         <>
         <h2>Settings</h2>
         {/* Image Button, side by side to users name and email*/}
         {/* Placeholder image? */}
-        <button></button>
 
         {/* Users Name and Email */}
-        <h1>John Doe</h1>
-        <p>Email </p>
+        <h1>User's name will display here depending on the name data that is stored after pressing 'update profile' button</h1>
+        <p>User's email will display here depending on the email data that is stored after pressing 'update profile' button </p>
         {/* Email will need to be updated depending on the email data that is stored */}
 
         <h1>Basic Profile Information</h1>
         {/* Text boxes will be to the side of the category */}
 
-<form id="profile-page">
-  <label htmlFor="name">Name:</label>
+        
+
+{/* <form id="profile-page">
+  <label htmlFor="name">Full Name:</label>
   <input type="text" id="name"/>
   <br/>
   <label htmlFor="email">Email:</label>
@@ -36,39 +76,128 @@ export default function ProfilePage() {
   <input type="text" id="interests"/>
   <br/>
   {/* <input type="submit" value="Update Profile"/> */}
-  </form>
-
-  <button type = "submit" onClick = {UpdateProfile}>Update Profile</button>
-  {/* I might want to keep these as inputs instead of buttons */}
 
 
-{/* form action ='' at the top (although we don't even need the form label so idk how I would do that), and make a page that the user date will be stored in */}
-{/* <p>If you click the "Submit" button, the form-data will be sent to a page called "".</p> */}
+{/* <ol>
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+</ol> */}
 
-        {/* Update Profile Button */}
-        <button></button>
+<div id = 'profile-info'>
+    <div>Full Name </div>
+    <div>Email</div>
+    <div>Phone Number</div>
+    <div>Address</div>
+    <div>Interests</div>
+</div>
+
+{/* <div style= 'display:flex'> */}
+
+
+{/* Update Profile Button */}
+
+<React.Fragment>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Update Profile
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: 'form',
+        //   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+        //     event.preventDefault();
+        //     const formData = new FormData(event.currentTarget);
+        //     const formJson = Object.fromEntries((formData as any).entries());
+        //     const email = formJson.email;
+        //     console.log(email);
+        //     handleClose();
+        //   },
+        }}
+      >
+
+        {/* Add event listener? */}
+        <DialogTitle>Basic Profile Information</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>
+            To subscribe to this website, please enter your email address here. We
+            will send updates occasionally.
+          </DialogContentText> */}
+          <TextField
+            autoFocus
+        //     required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Full Name"
+        //     type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Email Address"
+        //     type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Phone Number"
+        //     type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Address"
+        //     type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Interests"
+        //     type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit" onClick = {UpdateProfile}>Submit</Button>
+          {/* When this submit button is clicked on (with an onclick, event listener it will display the user info on the page) */}
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+
 
         <h1>Passwords and Security</h1>
 
-        {/* Change Username Button */}
-        {/* Onclick */}
-
-        {/* <input type="submit" value="Change Username"/> */}
-        <button type = "submit">Change Username</button>
-
-        <br/>
-
-        {/* Change Password Button */}
-        {/* Onclick */}
-       
-        {/* <input type="submit" value="Change Password"/> */}
-        <button type = "submit">Change Password</button>
+        <button type = "submit" onClick = {ChangePassword}>Change Password</button>
 
 
         <br/>
 
         <h1>Multi-factor Authentication</h1>
-        <button type = "submit">Use an Authentication App</button>
+        <button type = "submit" onClick = {UseAuthApp}>Use an Authentication App</button>
         <script src="ProfilePageJS.js"></script>
         </>
         
