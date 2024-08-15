@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './Login.css';
 
 function SSOLogin() {
@@ -7,7 +8,32 @@ function SSOLogin() {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const websiteDomain = useParams().domain;
+  // const relyingPartyDomain = decodeURIComponent(useParams().domain);
 
+  
+  const hostURL = "https://localhost:3002";
+
+  const apiSignup = hostURL+ "/signup";
+  const apiLogin = hostURL+ "/SSO/login";
+  const apiLogout = hostURL+ "/logout";
+
+  const postSignupParams = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    credentials: 'include'
+  };
+  const postLoginParams = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    credentials: 'include'
+  };
+  const postLogoutParams = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    credentials: 'include'
+  };
+  
   function handleLogin(e) {
     e.preventDefault();
     if (!username) {
@@ -21,8 +47,30 @@ function SSOLogin() {
     } else {
       setPasswordError('');
     }
+    loginUser({userName: username, password: password});
   }
 
+  // FUNCTION
+  async function loginUser(user) {
+    try {
+      const postLoginParamsWithBody = {
+        ...postLoginParams,
+        body: JSON.stringify({user, websiteDomain})
+      };
+
+      const response = await fetch(apiLogin, postLoginParamsWithBody);
+      if (response.status === 200) {
+        const responseData = await response.json();
+        location.href = responseData.redirect + "/" + responseData.authorization;
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    return false;
+  }
+  
   return (
     <div id="login-container">
       <h1>Log into Organization through Identity Provider</h1>

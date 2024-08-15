@@ -30,7 +30,7 @@ export default function Landing() {
             <div id="create-account-subtext-div">
                 <p id="create-account-subtext">Already have an account?</p>
                 
-                <p><Link to="test.html" id="log-in-text">Log In</Link></p>
+                <p><Link to="/login" id="log-in-text">Log In</Link></p>
             </div>
         </div>
         

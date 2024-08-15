@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import './Login.css';
 import AccountContext from '../contexts/AccountContext';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 const hostURL = "https://localhost:3002";
@@ -35,6 +35,7 @@ function Login() {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   // FUNCTION
   function handleLogin(e) {
@@ -53,27 +54,6 @@ function Login() {
     loginUser({userName: username, password: password});
   }
 
-  // FUNCTION
-  async function signupUser(user) {
-    try {
-      const postSignupParamsWithBody = {
-        ...postSignupParams,
-        body: JSON.stringify(user)
-      };
-
-      const response = await fetch(apiSignup, postSignupParamsWithBody);
-      if (response.status === 201) {
-        setLoggedInUser(user.username);
-        saveLocalAccountData(user.username);
-
-        return true;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-
-    return false;
-  }
 
   // FUNCTION
   async function loginUser(user) {
@@ -86,6 +66,7 @@ function Login() {
       const response = await fetch(apiLogin, postLoginParamsWithBody);
       if (response.status === 200) {
         accountContext.loginUser(user.userName);
+        navigate('/dashboard');
         return true;
       }
     } catch (error) {
@@ -155,7 +136,7 @@ function Login() {
         </button>
       </form>
       <p className="signup-link">
-        Don’t have an account yet? <Link to="/signup">Sign up</Link>
+        Don’t have an account yet? <Link to="/create-account">Sign up</Link>
       </p>
     </div>
   );

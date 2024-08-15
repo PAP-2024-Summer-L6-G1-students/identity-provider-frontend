@@ -62,7 +62,7 @@ function SSOPage() {
   useEffect(() => {
     const fetchApiInfo = async () => {
       try {
-        const data = await fetchJSON(`https://localhost:3002/sso/get-api-info/${userUUID}`);
+        const data = await fetchJSON(`https://localhost:3002/sso/get-api-info`);
         setApiInfo(data);
         setLoading(false);
       } catch (error) {
@@ -83,7 +83,7 @@ function SSOPage() {
   }
 
   async function saveInformation() {
-    const route = `http://localhost:3002/sso/save-api-info/${apiInfo.userUUID}`;
+    const route = `https://localhost:3002/sso/save-api-info/${apiInfo.userUUID}`;
   
     const body = {
       websiteDomain: apiInfo.websiteDomain,
@@ -274,7 +274,7 @@ function SSOPage() {
         </button>
         
 
-       <textarea>{`<a href="http://localhost:5173/sso/login/${apiInfo.websiteDomain}">Login with SSO</a>`}</textarea>
+       <textarea>{`<a href="https://localhost:5173/SSO/login/${apiInfo.websiteDomain}">Login with SSO</a>`}</textarea>
         
       </form>
 
