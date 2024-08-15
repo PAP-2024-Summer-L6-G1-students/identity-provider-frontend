@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'; 
+
 
 
 export default function ResetPasswordTextFields() {
@@ -29,18 +31,29 @@ export default function ResetPasswordTextFields() {
   const [passwordsMatch, setPasswordsMatch] = React.useState(false)
 
 
+  const navigate = useNavigate()
+
+  const resetConfirmation = () => {
+      navigate('/reset-confirmation');
+  }
+
+
+
+
   async function resetPassword(urlUUID, password) {
     try {
-        const response = await fetch(`http://localhost:3002/reset-password/${urlUUID}`, {
+        const response = await fetch(`https://localhost:3002/reset-password/${urlUUID}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ password }), 
+            credentials: "include"
         });
 
         const result = await response.json(); 
         console.log(result); 
+        resetConfirmation()
     } catch (error) {
         console.error('Error resetting password:', error);
     }

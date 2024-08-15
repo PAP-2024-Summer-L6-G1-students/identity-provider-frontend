@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "launch": "cd identity-provider-frontend && npm install && npm run dev & cd ../identity-provider-backend && npm install && npm run dev",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -15,9 +16,12 @@
     "@fontsource/roboto": "^5.0.13",
     "@mui/icons-material": "^5.16.5",
     "@mui/material": "^5.16.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.0"
+    "final-project": "file:../..",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^6.26.0",
+    "styled-components": "^6.1.12",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -32,5 +36,6 @@
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
-  }
+  },
+  "proxy": "https://localhost:3002/"
 }

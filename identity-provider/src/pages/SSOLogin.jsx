@@ -1,43 +1,39 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import './Login.css';
-import AccountContext from '../contexts/AccountContext';
-import {Link, useNavigate} from 'react-router-dom';
 
-
-const hostURL = "https://localhost:3002";
-
-const apiSignup = hostURL+ "/signup";
-const apiLogin = hostURL+ "/login";
-const apiLogout = hostURL+ "/logout";
-
-const postSignupParams = {
-  headers: { 'Content-Type': 'application/json' },
-  method: 'POST',
-  credentials: 'include'
-};
-const postLoginParams = {
-  headers: { 'Content-Type': 'application/json' },
-  method: 'POST',
-  credentials: 'include'
-};
-const postLogoutParams = {
-  headers: { 'Content-Type': 'application/json' },
-  method: 'POST',
-  credentials: 'include'
-};
-
-
-function Login() {
-  const accountContext = useContext(AccountContext);
-
+function SSOLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const websiteDomain = useParams().domain;
+  // const relyingPartyDomain = decodeURIComponent(useParams().domain);
 
-  // FUNCTION
+  
+  const hostURL = "https://localhost:3002";
+
+  const apiSignup = hostURL+ "/signup";
+  const apiLogin = hostURL+ "/SSO/login";
+  const apiLogout = hostURL+ "/logout";
+
+  const postSignupParams = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    credentials: 'include'
+  };
+  const postLoginParams = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    credentials: 'include'
+  };
+  const postLogoutParams = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    credentials: 'include'
+  };
+  
   function handleLogin(e) {
     e.preventDefault();
     if (!username) {
@@ -54,19 +50,18 @@ function Login() {
     loginUser({userName: username, password: password});
   }
 
-
   // FUNCTION
   async function loginUser(user) {
     try {
       const postLoginParamsWithBody = {
         ...postLoginParams,
-        body: JSON.stringify(user)
+        body: JSON.stringify({user, websiteDomain})
       };
 
       const response = await fetch(apiLogin, postLoginParamsWithBody);
       if (response.status === 200) {
-        accountContext.loginUser(user.userName);
-        navigate('/dashboard');
+        const responseData = await response.json();
+        location.href = responseData.redirect + "/" + responseData.authorization;
         return true;
       }
     } catch (error) {
@@ -75,25 +70,10 @@ function Login() {
 
     return false;
   }
-
-  // FUNCTION
-  async function logoutUser() {
-    try {
-      const response = await fetch(apiLogout, postLogoutParams);
-      if (response.status === 200) {
-        accountContext.logoutUser();
-        return true;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-
-    return false;
-  }
-
+  
   return (
     <div id="login-container">
-      <h1>Log in</h1>
+      <h1>Log into Organization through Identity Provider</h1>
       <p>Hello, welcome back!</p>
       <form onSubmit={handleLogin}>
         <div className="form-group">
@@ -127,9 +107,9 @@ function Login() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <Link to="/forgot-password">
+          <a href="/forgot-password" className="forgot-password">
             Forgot Password?
-          </Link>
+          </a>
         </div>
         <button type="submit" className="login-button">
           Log in
@@ -142,4 +122,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SSOLogin;

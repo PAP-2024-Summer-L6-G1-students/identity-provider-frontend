@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreateAccount.css';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 export default function CreateAccount() {
@@ -10,6 +11,7 @@ export default function CreateAccount() {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate();
   
     function handlePasswordChange(e) {
       const newPassword = e.target.value;
@@ -42,10 +44,25 @@ export default function CreateAccount() {
       }
     }
   
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
       if (!passwordError && !confirmPasswordError) {
         console.log('Form submitted:', { username, password, confirmPassword });
+        const result = await fetch("https://localhost:3002/signup", {
+          credentials: 'include',
+          method: 'POST',
+          headers: { "Content-Type":"application/json"},
+          body: JSON.stringify({
+            userName: username,
+            password: password,
+          })
+        })
+
+        if (result.status === 201) {
+          navigate('/dashboard')
+        } else {
+          console.error("Sign up failed");
+        }
       }
     }
   
@@ -102,7 +119,7 @@ export default function CreateAccount() {
           </button>
         </form>
         <p>
-          Already have an account? <a href="/login">Log In</a>
+          Already have an account? <Link to="/login">Log In</Link>
         </p>
       </div>
     );

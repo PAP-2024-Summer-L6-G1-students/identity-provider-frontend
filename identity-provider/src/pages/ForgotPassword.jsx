@@ -9,12 +9,13 @@ export default function forgotPassword() {
 
     async function logInput(input) {
         try {
-          const response = await fetch('http://localhost:3002/forgot-password', {
+          const response = await fetch('https://localhost:3002/forgot-password', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email: email }), 
+            credentials: "include"
           });
       
           const result = await response.text();
