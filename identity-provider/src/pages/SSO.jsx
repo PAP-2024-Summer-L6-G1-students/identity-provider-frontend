@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./SSOPage.css"
+import "./SSO.css"
 function SSOPage() {
   const [apiInfo, setApiInfo] = useState({
     afterLoginRedirectRoute: '',
